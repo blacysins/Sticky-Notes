@@ -1,8 +1,17 @@
 const button = document.querySelector("#create-button");
 const stickyNotes = document.querySelector("#sticky-notes");
+const textarea = document.querySelector("#note-add");
+const originalPlaceholder = textarea.placeholder;
+
+textarea.addEventListener("input", () => {
+  textarea.placeholder = originalPlaceholder;
+});
 
 button.addEventListener("click", (e) => {
-  const textarea = document.querySelector("#note-add");
+  if (textarea.value.trim() === "") {
+    textarea.placeholder = "Please enter some text...";
+    return;
+  }
 
   const noteDiv = document.createElement("div");
   const noteP = document.createElement("p");
@@ -20,6 +29,7 @@ button.addEventListener("click", (e) => {
 
   noteP.textContent = textarea.value.trim();
   textarea.value = "";
+  textarea.placeholder = originalPlaceholder;
 });
 
 stickyNotes.addEventListener("click", (e) => {
